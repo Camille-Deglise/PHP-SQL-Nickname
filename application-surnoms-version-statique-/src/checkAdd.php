@@ -56,3 +56,7 @@ if(!isset($_POST["section"]) && ($_POST["section"] != "info"
         echo $error . "<br>";
     }
 }
+else {
+    //méthode pour implémenter les données de la session dans 
+    //la base de données 
+}

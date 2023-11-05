@@ -51,19 +51,19 @@
     }
 
     /**
-     * TODO: � compl�ter
+     * Méthode pour traiter les données pour les retourner 
+     * en tableau associatif (avec PDO::FETCH_ASSOC)
      */
     private function formatData($req){
 
-        // TODO: traiter les donn�es pour les retourner par exemple en tableau associatif (avec PDO::FETCH_ASSOC)
     }
 
     /**
-     * TODO: � compl�ter
+     * Méthode pour vider le jeu d'enregistrement
      */
     private function unsetData($req){
 
-        // TODO: vider le jeu d�enregistrement
+        
     }
 
     /**
@@ -134,6 +134,26 @@
      */
     public function addTeacher()
     {
+        $firstName = $_POST["firstName"];
+        $lastname = $_POST["name"];
+        $gender = $_POST["genre"];
+        $nickName = $_POST["nickName"];
+        $origin = $_POST["origin"];
+        $section = $_POST["section"];
+
+        $query = "INSERT INTO t_teacher (teaFirstName, teaName, teaGender, 
+        teaNickname, teaOrigine, teaOrigine, fkSection)
+        VALUES(:firstName, :lastname, :gender, :nickName, :origin, :section)";
+
+        $req = $this->connector->prepare($query);
+        $req->bindValue(':firstName', $firstName, PDO::PARAM_STR);
+        $req->bindValue(':lastname', $lastname, PDO::PARAM_STR);
+        $req->bindValue(':gender', $gender,PDO::PARAM_STR);
+        $req->bindValue(':nickName', $nickName, PDO::PARAM_STR);
+        $req->bindValue(':origin', $origin, PDO::PARAM_STR);
+        $req->bindValue(':section', $section, PDO::PARAM_INT);
+
+        $req->execute();
 
     }
  }
