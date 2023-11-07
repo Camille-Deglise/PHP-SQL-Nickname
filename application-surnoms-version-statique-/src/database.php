@@ -187,6 +187,10 @@
         $this->queryPrepareExecute($query, $binds);
 
     }
+    public function updateTeacher($data)
+    {
+        
+    }
 
  }
 ?>
