@@ -8,6 +8,7 @@ $teachers = $db->getAllTeachers();
 //var_dump($teachers);
 //echo "</pre>";
 
+
 ?>
 
 <!DOCTYPE html>
