@@ -1,8 +1,7 @@
 <?php
- session_start();
 include("Database.php");
 $db = new Database();
-
+$sections = $db->getAllSections();
 
 ?>
 
@@ -73,8 +72,13 @@ $db = new Database();
                     <label style="display: none" for="section"></label>
                     <select name="section" id="section">
                         <option value="">Section</option>
-                        <option value="info">Informatique</option>
-                        <option value="bois">Bois</option>
+                        <?php
+                        $html = "";
+                        foreach($sections as $section) {
+                            $html .= "<option value='" . $section["idSection"] . "'>" . $section["secName"] . "</option>";
+                        }
+                        echo $html;
+                        ?>
                     </select>
                 </p>
                 <p>

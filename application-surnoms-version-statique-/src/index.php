@@ -68,7 +68,7 @@ $teachers = $db->getAllTeachers();
                         $html .= "<td>" . $teacher["teaNickname"] . "</td>";
                         $html .= "<td class=\"containerOptions\">";
                         
-                        $html .= "<a href='#'>";
+                        $html .= "<a href=\"updateTeacher.php?idTeacher=" .  $teacher["idTeacher"] . "\">";
                         $html .= "<img height=\"20em\" src=\"./img/edit.png\" alt=\"edit\">";
                         $html .= "</a>";
                         $html .= "<a href=\"javascript:confirmDelete()\">";

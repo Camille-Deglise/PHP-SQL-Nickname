@@ -32,10 +32,11 @@
     /**
      * Fonction pour exécuter une requête simple en utilisant la méthode query 
      * Utiliser uniquement sans paramètres
-     */    private function querySimpleExecute($query){
+     */
+    private function querySimpleExecute($query){
 
-        $req = $this->connector->query('SELECT * FROM Table');
-        
+        $req = $this->connector->query($query);
+        return $req;
     }
 
     /**
@@ -44,10 +45,11 @@
      */
     private function queryPrepareExecute($query, $binds){
         
-        // $req = $connector->prepare('SELECT * FROM Table WHERE id = :varId AND input = :varInput');
-        //$req->bindValue('varId', $id, PDO::PARAM_INT);
-        //$req->bindValue('varInput', $input, PDO::PARAM_STR);
-        //$req->execute();
+        $req = $this->connector->prepare($query);
+        foreach($binds as $bind) {
+            $req->bindValue($bind[0], $bind[1], $bind[2]);
+        }
+        $req->execute();
     }
 
     /**
@@ -55,15 +57,7 @@
      * en tableau associatif (avec PDO::FETCH_ASSOC)
      */
     private function formatData($req){
-
-    }
-
-    /**
-     * Méthode pour vider le jeu d'enregistrement
-     */
-    private function unsetData($req){
-
-        
+        return $req->fetchALL(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -75,13 +69,30 @@
         $query = "SELECT * FROM t_teacher;";
 
        //appeler la méthode pour executer la requête
-        $req = $this->connector->query($query);
+        $req = $this->querySimpleExecute($query);
 
         //Retourne dans un tableau les données des enseignants
-        $teachers = $req->fetchALL(PDO::FETCH_ASSOC);
+        $teachers = $this->formatData($req);
         
         return $teachers;
 
+    }
+    /*
+    *Méthode pour récupérer toutes les sections présentes dans la base de données
+    *Utilisée dans le addTeacher, updateTeacher. 
+    */
+    public function getAllSections()
+    {
+        // Récupère les données sur la table enseignants avec une requête sql
+        $query = "SELECT * FROM t_section;";
+
+       //appeler la méthode pour executer la requête
+        $req = $this->querySimpleExecute($query);
+
+        //Retourne dans un tableau les données des enseignants
+        $sections = $this->formatData($req);
+        
+        return $sections;
     }
 
     /**
@@ -97,15 +108,16 @@
 
         //MODIFIER EN PREPARE
        //appeler la méthode pour executer la requête
-        $req = $this->connector->query($query);
+        $req = $this->querySimpleExecute($query);
 
         //Retourne dans un tableau associatif à une seule 
         //entrée les données d'un enseignant
-        $teacher = $req->fetchALL(PDO::FETCH_ASSOC);
+        $teacher =$this->formatData($req);
         
         //Retourne la première (et unique) entrée du tableau
         return $teacher[0];
     }
+
 
     /**
      *Méthode qui récupère dans la liste des informations pour 1 section
@@ -121,42 +133,60 @@
 
         //MODIFIER EN PREPARE
         //appeler la méthode pour exécuter la requête
-        $req = $this->connector->query($query);
+        $req = $this->querySimpleExecute($query);
 
         //Reourne dans un tableau associatif les données de section
-        $section = $req->fetchALL(PDO::FETCH_ASSOC);
+        $section = $this->formatData($req);
 
         return $section[0];
 
      }
     /**
      * Méthode pour insérer les données d'un nouvel enseignsant 
+     * Prend en argument les données du $_POST de la page qui l'appelle
+     * Utilise la méthode prepare car 
      */
-    public function addTeacher()
+    public function addTeacher($data)
     {
-        $firstName = $_POST["firstName"];
-        $lastname = $_POST["name"];
-        $gender = $_POST["genre"];
-        $nickName = $_POST["nickName"];
-        $origin = $_POST["origin"];
-        $section = $_POST["section"];
+        //Ajout des données de $_POST ($data) dans de nouvelles variables
+        //pour des questions de lisibilité. 
+        $firstName = $data["firstName"];
+        $lastname = $data["name"];
+        $gender = $data["genre"];
+        $nickName = $data["nickName"];
+        $origin = $data["origin"];
+        $fkSection = $data["section"];
 
+        //Requête sur la db pour insérer les nouvelles données avec prepare
+        //:xxx == étiquette 
         $query = "INSERT INTO t_teacher (teaFirstName, teaName, teaGender, 
-        teaNickname, teaOrigine, teaOrigine, fkSection)
+        teaNickname, teaOrigine, fkSection)
         VALUES(:firstName, :lastname, :gender, :nickName, :origin, :section)";
 
+        /*
+        //Utilisation de la méthode Prepare pour envoyer les données dans la db. 
         $req = $this->connector->prepare($query);
-        $req->bindValue(':firstName', $firstName, PDO::PARAM_STR);
-        $req->bindValue(':lastname', $lastname, PDO::PARAM_STR);
-        $req->bindValue(':gender', $gender,PDO::PARAM_STR);
-        $req->bindValue(':nickName', $nickName, PDO::PARAM_STR);
-        $req->bindValue(':origin', $origin, PDO::PARAM_STR);
-        $req->bindValue(':section', $section, PDO::PARAM_INT);
+        $req->bindValue('firstName', $firstName, PDO::PARAM_STR);
+        $req->bindValue('lastname', $lastname, PDO::PARAM_STR);
+        $req->bindValue('gender', $gender,PDO::PARAM_STR);
+        $req->bindValue('nickName', $nickName, PDO::PARAM_STR);
+        $req->bindValue('origin', $origin, PDO::PARAM_STR);
+        $req->bindValue('section', $fkSection, PDO::PARAM_INT);
 
+        //méthode d'exécution de la requête
         $req->execute();
+        */
+        $binds = [
+            ['firstName', $firstName, PDO::PARAM_STR],
+            ['lastname', $lastname, PDO::PARAM_STR],
+            ['gender', $gender, PDO::PARAM_STR],
+            ['nickName', $nickName, PDO::PARAM_STR],
+            ['origin', $origin, PDO::PARAM_STR],
+            ['section', $fkSection, PDO::PARAM_INT],
+        ];
+        $this->queryPrepareExecute($query, $binds);
 
     }
+
  }
-
-
 ?>

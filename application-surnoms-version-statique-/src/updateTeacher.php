@@ -1,3 +1,11 @@
+<?php
+include("Database.php");
+$db = new Database();
+$sections = $db->getAllSections();
+$teacher = $db->getOneTeacher($idTeacher);
+$section = $db->getOneSection($teacher["fkSection"]);
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -17,7 +25,7 @@
                 <h1>Surnom des enseignants</h1>
             </div>
             <div class="login-container">
-                <form action="#" method="post">
+                <form action="checkLogin.php" method="post" >
                     <label for="user"> </label>
                     <input type="text" name="user" id="user" placeholder="Login">
                     <label for="password"> </label>
@@ -28,15 +36,15 @@
         </div>
         <nav>
             <h2>Zone pour le menu</h2>
-            <a href="index.html">Accueil</a>
-            <a href="addTeacher.html">Ajouter un enseignant</a>
+            <a href="index.php">Accueil</a>
+            <a href="addTeacher.php">Ajouter un enseignant</a>
         </nav>
     </header>
 
     <div class="container">
         <div class="user-body">
-            <form action="#" method="post" id="form">
-                <h3>Ajout d'un enseignant</h3>
+            <form action="checkUpdate.php" method="post" id="form">
+                <h3>Modifier un enseignant</h3>
                 <p>
                     <input type="radio" id="genre1" name="genre" value="M" checked>
                     <label for="genre1">Homme</label>
@@ -46,11 +54,11 @@
                     <label for="genre3">Autre</label>
                 </p>
                 <p>
-                    <label for="firstName">Nom :</label>
+                    <label for="firstName">Prénom :</label>
                     <input type="text" name="firstName" id="firstName" value="">
                 </p>
                 <p>
-                    <label for="name">Prénom :</label>
+                    <label for="name">Nom :</label>
                     <input type="text" name="name" id="name" value="">
                 </p>
                 <p>
@@ -65,8 +73,13 @@
                     <label style="display: none" for="section"></label>
                     <select name="section" id="section">
                         <option value="">Section</option>
-                        <option value="info">Informatique</option>
-                        <option value="bois">Bois</option>
+                        <?php
+                        $html = "";
+                        foreach($sections as $section) {
+                            $html .= "<option value='" . $section["idSection"] . "'>" . $section["secName"] . "</option>";
+                        }
+                        echo $html;
+                        ?>
                     </select>
                 </p>
                 <p>
@@ -76,7 +89,7 @@
             </form>
         </div>
         <div class="user-footer">
-            <a href="index.html">Retour à la page d'accueil</a>
+            <a href="index.php">Retour à la page d'accueil</a>
         </div>
     </div>
 

@@ -59,4 +59,10 @@ if(!isset($_POST["section"]) && ($_POST["section"] != "info"
 else {
     //méthode pour implémenter les données de la session dans 
     //la base de données 
+
+    include("database.php");
+    $db = new Database();
+    $db->addTeacher($_POST);
+
+    // todo : redirect sur index.php
 }
