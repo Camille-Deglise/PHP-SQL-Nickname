@@ -42,7 +42,7 @@ if(!isset($_POST["origin"]) || $_POST["origin"] == "")
 if(!isset($_POST["section"]) && ($_POST["section"] != "info" 
  || $_POS["section"] != "bois") )
  {
-    $errors[] = "Le champ origine est obligaoire";
+    $errors[] = "Le champ section est obligaoire";
  }
 
  if (count($errors) > 0)
@@ -57,6 +57,6 @@ else {
     $db = new Database();
     $db->addTeacher($_POST);
 
-    header("Location : index.php");
+    header("Location : addTeacher.php");
     exit();
 }
