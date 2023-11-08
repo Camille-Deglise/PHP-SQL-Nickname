@@ -46,12 +46,21 @@ $section = $db->getOneSection($teacher["fkSection"]);
             <form action="checkUpdate.php" method="post" id="form">
                 <h3>Modifier un enseignant</h3>
                 <p>
-                    <input type="radio" id="genre1" name="genre" value="M" checked>
-                    <label for="genre1">Homme</label>
-                    <input type="radio" id="genre2" name="genre" value="F">
-                    <label for="genre2">Femme</label>
-                    <input type="radio" id="genre3" name="genre" value="A">
-                    <label for="genre3">Autre</label>
+                    <?php
+
+                    //fait un if qui test le genre 
+                    //si valeur teacher[genre] == 'M'
+                    $check1 = "checked";
+                    //check2 = "";
+                    //check3 = "";
+
+                    echo "<input type=\"radio\" id=\"genre1\" name=\"genre\" value=\"M\" . $check1>";
+                    echo "<label for=\"genre1\">Homme</label>";
+                    echo "<input type=\"radio\" id=\"genre2\" name=\"genre\" value=\"F\">";
+                    echo "<label for=\"genre2\">Femme</label>";
+                    echo "<input type=\"radio\" id=\"genre3\" name=\"genre\" value=\"A\">";
+                    echo "<label for=\"genre3\">Autre</label>";
+                    ?>
                 </p>
                 <p>
                     <label for="firstName">Prénom :</label>

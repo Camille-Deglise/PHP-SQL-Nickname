@@ -52,12 +52,10 @@ if(!isset($_POST["section"]) && ($_POST["section"] != "info"
     }
 }
 else {
-    //méthode pour implémenter les données de la session dans 
-    //la base de données 
-
+    
     include("database.php");
     $db = new Database();
     $db->updateTeacher($_POST);
 
-    header('Location : index.php')
+    header('location:./index.php');
 }

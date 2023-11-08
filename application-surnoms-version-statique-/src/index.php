@@ -68,13 +68,13 @@ $teachers = $db->getAllTeachers();
                         $html .= "<td>" . $teacher["teaNickname"] . "</td>";
                         $html .= "<td class=\"containerOptions\">";
                         
-                        $html .= "<a href=\"updateTeacher.php?idTeacher=" .  $teacher["idTeacher"] . "\">";
+                        $html .= "<a href=\"./updateTeacher.php?idTeacher=" .  $teacher["idTeacher"] . "\">";
                         $html .= "<img height=\"20em\" src=\"./img/edit.png\" alt=\"edit\">";
                         $html .= "</a>";
                         $html .= "<a href=\"javascript:confirmDelete()\">";
                         $html .= "<img height=\"20em\" src=\"./img/delete.png\" alt=\"delete\">";
                         $html .= "</a>";
-                        $html .= "<a href=\"detailTeacher.php?idTeacher=" .  $teacher["idTeacher"] . "\">";
+                        $html .= "<a href=\"./detailTeacher.php?idTeacher=" .  $teacher["idTeacher"] . "\">";
                         $html .= "<img height=\"20em\" src=\"./img/detail.png\" alt=\"detail\">";
                         $html .= "</a>";
                         $html .= "</td>";

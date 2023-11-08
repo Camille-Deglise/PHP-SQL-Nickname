@@ -57,6 +57,6 @@ else {
     $db = new Database();
     $db->addTeacher($_POST);
 
-    header("Location : addTeacher.php");
+    header('location:./addTeacher.php');
     exit();
 }
