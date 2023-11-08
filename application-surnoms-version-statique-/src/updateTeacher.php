@@ -3,6 +3,7 @@ include("Database.php");
 $db = new Database();
 $sections = $db->getAllSections();
 $teacher = $db->getOneTeacher($idTeacher);
+var_dump("Test");
 $section = $db->getOneSection($teacher["fkSection"]);
 ?>
 

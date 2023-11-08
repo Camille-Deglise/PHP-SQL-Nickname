@@ -19,14 +19,14 @@
      * Utilise un trycatch pour renvoyer une erreur dans la variable $e
      */
     public function __construct(){
-    try{
-        $this->connector = new PDO('mysql:host=localhost:6033;dbname=db_nickname;charset=utf8', 'root', 'root');
-        //echo "DB connectée";
-    }
-    catch (PDOException $e)
-    {
-        die('Erreur :' . $e->getMessage());
-    }
+        try{
+            $this->connector = new PDO('mysql:host=localhost:6033;dbname=db_nickname;charset=utf8', 'root', 'root');
+            echo "DB connectée";
+        }
+        catch (PDOException $e)
+        {
+            die('Erreur :' . $e->getMessage());
+        }
     }
 
     /**
@@ -101,18 +101,19 @@
      * Doit être associée à un $_GET dans la page concernée
      */
     public function getOneTeacher($id){
-
         // Récupère les données sur la table enseignants avec une requête sql
         // en utilisant son ID
         $query = "SELECT * FROM t_teacher WHERE idTeacher = $id;"; // faire un join pour récupérer le nom de la section au lieu de l'ID
-
+        
         //MODIFIER EN PREPARE
-       //appeler la méthode pour executer la requête
+        //appeler la méthode pour executer la requête
         $req = $this->querySimpleExecute($query);
+        var_dump("test getOne");
 
         //Retourne dans un tableau associatif à une seule 
         //entrée les données d'un enseignant
         $teacher =$this->formatData($req);
+        var_dump($teacher);
         
         //Retourne la première (et unique) entrée du tableau
         return $teacher[0];
