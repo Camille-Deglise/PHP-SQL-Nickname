@@ -48,8 +48,9 @@ $section = $db->getOneSection($teacher["fkSection"]);
 
     <div class="container">
         <div class="user-body">
-            <form action="checkUpdate.php" method="post" id="form">
+            <form action="checkUpdate.php" method="post" id="form1">
                 <h3>Modifier un enseignant</h3>
+                <input type="hidden" name="idTeacher" id="idTeacher" value="<?= $teacher["idTeacher"] ?>">
                 <p>
                     <?php
                     $check1 = "";
@@ -91,24 +92,30 @@ $section = $db->getOneSection($teacher["fkSection"]);
                 </p>
                 <p>
                     <label for="origin">Origine :</label>
-                    <textarea name="origin" id="origin" value="<?= $teacher["teaOrigine"] ?>" ></textarea>
+                    <textarea name="origin" id="origin" value="" ><?= $teacher["teaOrigine"] ?></textarea>
                 </p>
                 <p>
                     <label style="display: none" for="section"></label>
                     <select name="section" id="section">
-                        <option value="<?= $teacher["fkSection"] ?>">Section</option>
+                        <option value="">Section</option>
                         <?php
                         $html = "";
                         foreach($sections as $section) {
+                            if($teacher["fkSection"] === $section["idSection"])
+                            {
+                                $html .= "<option value='" . $section["idSection"] . "' selected >" . $section["secName"] . "</option>";
+                            } 
+                            else 
                             $html .= "<option value='" . $section["idSection"] . "'>" . $section["secName"] . "</option>";
                         }
                         echo $html;
                         ?>
                     </select>
+
                 </p>
                 <p>
                     <input type="submit" value="Modifier">
-                    <button type="button" onclick="document.getElementById('form').reset();">Effacer</button>
+                    <button type="button" id="resetBtn" value="Reset">Effacer</button>
                 </p>
             </form>
         </div>
@@ -120,6 +127,8 @@ $section = $db->getOneSection($teacher["fkSection"]);
     <footer>
         <p>Copyright GCR - bulle web-db - 2022</p>
     </footer>
+
+    <script src="js/script.js"></script>
 
 </body>
 

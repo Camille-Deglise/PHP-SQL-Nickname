@@ -188,7 +188,33 @@
     }
     public function updateTeacher($data)
     {
-        
+        $firstName = $data["firstName"];
+        $lastname = $data["name"];
+        $gender = $data["genre"];
+        $nickName = $data["nickName"];
+        $origin = $data["origin"];
+        $fkSection = $data["section"];
+
+        $query = "UPDATE t_teacher
+                  SET teaFirstName = :firstName, 
+                      teaName = :lastname, 
+                      teaGender = :gender,
+                      teaNickname = :nickName, 
+                      teaOrigine = :origin, 
+                      fkSection = :section
+                  WHERE idTeacher = ". $data['idTeacher'] . ";";
+
+        var_dump($query);
+
+        $binds = [
+            ['firstName', $firstName, PDO::PARAM_STR],
+            ['lastname', $lastname, PDO::PARAM_STR],
+            ['gender', $gender, PDO::PARAM_STR],
+            ['nickName', $nickName, PDO::PARAM_STR],
+            ['origin', $origin, PDO::PARAM_STR],
+            ['section', $fkSection, PDO::PARAM_INT],
+        ];
+        $this->queryPrepareExecute($query, $binds);
     }
 
     public function deleteTeacher($id)

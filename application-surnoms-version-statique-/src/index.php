@@ -86,7 +86,6 @@ $teachers = $db->getAllTeachers();
                 </tbody>
             </table>
         </form>
-        <script src="js/script.js"></script>
     </div>
 
     <footer>

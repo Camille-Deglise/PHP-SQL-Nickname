@@ -43,6 +43,7 @@ if(!isset($_POST["section"]) && ($_POST["section"] != "info"
     $errors[] = "Le champ origine est obligaoire";
  }
 
+
  if (count($errors) > 0)
 {
     foreach($errors as $error) {
@@ -58,5 +59,6 @@ else
     $db = new Database();
     $db->updateTeacher($_POST);
 
-    header('Location : index.php');
+    header('location: index.php');
+    exit();
 }
