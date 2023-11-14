@@ -2,8 +2,6 @@
 echo "<pre>";
 var_dump($_POST);
 echo "</pre>";
-
-
 $errors = array();
 
 //Validation des données
@@ -51,11 +49,14 @@ if(!isset($_POST["section"]) && ($_POST["section"] != "info"
         echo $error . "<br>";
     }
 }
-else {
-    
+else 
+{
+    //méthode pour implémenter les données de la session dans 
+    //la base de données 
+
     include("database.php");
     $db = new Database();
     $db->updateTeacher($_POST);
 
-    header('location:./index.php');
+    header('Location : index.php');
 }

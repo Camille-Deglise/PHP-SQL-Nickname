@@ -71,7 +71,7 @@ $teachers = $db->getAllTeachers();
                         $html .= "<a href=\"./updateTeacher.php?idTeacher=" .  $teacher["idTeacher"] . "\">";
                         $html .= "<img height=\"20em\" src=\"./img/edit.png\" alt=\"edit\">";
                         $html .= "</a>";
-                        $html .= "<a href=\"javascript:confirmDelete()\">";
+                        $html .= "<a onClick=\"return confirm('Êtes-vous sûr de vouloir supprimer l\'enseignant ?')\" href=\"./deleteTeacher.php?idTeacher=" .  $teacher["idTeacher"] . "\">";
                         $html .= "<img height=\"20em\" src=\"./img/delete.png\" alt=\"delete\">";
                         $html .= "</a>";
                         $html .= "<a href=\"./detailTeacher.php?idTeacher=" .  $teacher["idTeacher"] . "\">";

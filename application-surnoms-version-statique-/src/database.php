@@ -21,7 +21,7 @@
     public function __construct(){
         try{
             $this->connector = new PDO('mysql:host=localhost:6033;dbname=db_nickname;charset=utf8', 'root', 'root');
-            echo "DB connectée";
+            //echo "DB connectée";
         }
         catch (PDOException $e)
         {
@@ -108,12 +108,10 @@
         //MODIFIER EN PREPARE
         //appeler la méthode pour executer la requête
         $req = $this->querySimpleExecute($query);
-        var_dump("test getOne");
 
         //Retourne dans un tableau associatif à une seule 
         //entrée les données d'un enseignant
         $teacher =$this->formatData($req);
-        var_dump($teacher);
         
         //Retourne la première (et unique) entrée du tableau
         return $teacher[0];
@@ -190,6 +188,16 @@
     }
     public function updateTeacher($data)
     {
+        
+    }
+
+    public function deleteTeacher($id)
+    {
+        $query = "DELETE FROM t_teacher WHERE idTeacher = :id";
+        $binds = [
+            ['id', $id, PDO::PARAM_INT]
+        ];
+        $this->queryPrepareExecute($query, $binds);
         
     }
 

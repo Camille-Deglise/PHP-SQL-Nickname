@@ -1,9 +1,13 @@
 <?php
+$idTeacher = $_GET["idTeacher"];
+
 include("Database.php");
 $db = new Database();
 $sections = $db->getAllSections();
 $teacher = $db->getOneTeacher($idTeacher);
-var_dump("Test");
+
+var_dump($teacher);
+
 $section = $db->getOneSection($teacher["fkSection"]);
 ?>
 
@@ -48,41 +52,51 @@ $section = $db->getOneSection($teacher["fkSection"]);
                 <h3>Modifier un enseignant</h3>
                 <p>
                     <?php
+                    $check1 = "";
+                    $check2 = "";
+                    $check3 = "";
 
-                    //fait un if qui test le genre 
-                    //si valeur teacher[genre] == 'M'
-                    $check1 = "checked";
-                    //check2 = "";
-                    //check3 = "";
-
-                    echo "<input type=\"radio\" id=\"genre1\" name=\"genre\" value=\"M\" . $check1>";
+                    if($teacher["teaGender"] == 'M')
+                    {
+                        $check1 = "checked";
+                    }
+                    elseif($teacher["teaGender"] == 'F')
+                    {
+                        $check2 = "checked";
+                    }
+                    else 
+                    {
+                        $check3 = "checked";
+                    }
+              
+                    echo "<input type=\"radio\" id=\"genre1\" name=\"genre\" value=\"M\" ". $check1 .">";
                     echo "<label for=\"genre1\">Homme</label>";
-                    echo "<input type=\"radio\" id=\"genre2\" name=\"genre\" value=\"F\">";
+                    echo "<input type=\"radio\" id=\"genre2\" name=\"genre\" value=\"F\" ". $check2 .">";
                     echo "<label for=\"genre2\">Femme</label>";
-                    echo "<input type=\"radio\" id=\"genre3\" name=\"genre\" value=\"A\">";
+                    echo "<input type=\"radio\" id=\"genre3\" name=\"genre\" value=\"A\" ". $check3 .">";
                     echo "<label for=\"genre3\">Autre</label>";
                     ?>
                 </p>
                 <p>
                     <label for="firstName">Prénom :</label>
-                    <input type="text" name="firstName" id="firstName" value="">
+                    <input type="text" name="firstName" id="firstName" value="<?= $teacher["teaFirstname"] ?>">
                 </p>
                 <p>
                     <label for="name">Nom :</label>
-                    <input type="text" name="name" id="name" value="">
+                    <input type="text" name="name" id="name" value="<?= $teacher["teaName"] ?>">
                 </p>
                 <p>
                     <label for="nickName">Surnom :</label>
-                    <input type="text" name="nickName" id="nickName" value="">
+                    <input type="text" name="nickName" id="nickName" value="<?= $teacher["teaNickname"] ?>">
                 </p>
                 <p>
                     <label for="origin">Origine :</label>
-                    <textarea name="origin" id="origin"></textarea>
+                    <textarea name="origin" id="origin" value="<?= $teacher["teaOrigine"] ?>" ></textarea>
                 </p>
                 <p>
                     <label style="display: none" for="section"></label>
                     <select name="section" id="section">
-                        <option value="">Section</option>
+                        <option value="<?= $teacher["fkSection"] ?>">Section</option>
                         <?php
                         $html = "";
                         foreach($sections as $section) {
@@ -93,7 +107,7 @@ $section = $db->getOneSection($teacher["fkSection"]);
                     </select>
                 </p>
                 <p>
-                    <input type="submit" value="Ajouter">
+                    <input type="submit" value="Modifier">
                     <button type="button" onclick="document.getElementById('form').reset();">Effacer</button>
                 </p>
             </form>
