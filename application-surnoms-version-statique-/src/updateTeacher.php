@@ -109,9 +109,10 @@ $section = $db->getOneSection($teacher["fkSection"]);
                     <select name="section" id="section">
                         <option value="">Section</option>
                         <?php
-                        //Condition pour l'affichage de la section avec le mot clé selected s'il y a correspondance
+                        
                         $html = "";
                         foreach($sections as $section) {
+                            //Condition pour l'affichage de la section avec le mot clé selected s'il y a correspondance
                             if($teacher["fkSection"] === $section["idSection"])
                             {
                                 $html .= "<option value='" . $section["idSection"] . "' selected >" . $section["secName"] . "</option>";

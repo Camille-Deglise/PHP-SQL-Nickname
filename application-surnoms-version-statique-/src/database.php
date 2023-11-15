@@ -229,6 +229,11 @@
         $this->queryPrepareExecute($query, $binds);
         
     }
+     /*******************************************************************************************************************************************/
+     private function addUser()
+     {
+        $query = "INSERT INTO t_user VALUES (";
+     }
 
  }
 ?>

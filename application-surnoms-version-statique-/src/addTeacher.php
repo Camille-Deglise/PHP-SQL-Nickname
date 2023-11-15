@@ -7,6 +7,7 @@
  */
 include("Database.php");
 $db = new Database();
+
 $sections = $db->getAllSections();
 
 ?>
