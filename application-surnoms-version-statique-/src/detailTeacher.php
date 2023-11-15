@@ -58,6 +58,7 @@ $section = $db->getOneSection($teacher["fkSection"]);
         <div class="user-head">
             <h3>Détail : <?= $teacher["teaFirstname"] . " " . $teacher["teaName"]?> 
             <?php
+            // Conditions pour l'affichage de l'image déterminant le genre de l'enseignant 
                 if($teacher["teaGender"] == "M")
                 {
                     echo "<img style=\"margin-left: 1vw;\" height=\"20em\" src=\"./img/male.png\" alt=\"male symbole\">";
@@ -74,7 +75,8 @@ $section = $db->getOneSection($teacher["fkSection"]);
                 
             </h3>
             <p>
-                <?= $section["secName"]?> <!-- Doit aller chercher INFO dans t_section-->
+                <!-- Affichage du nom de la section selon l'enseignant -->
+                <?= $section["secName"]?> 
             </p>
             <div class="actions">
 

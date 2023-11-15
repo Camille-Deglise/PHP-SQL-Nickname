@@ -66,7 +66,7 @@ $teachers = $db->getAllTeachers();
                 </thead>
                 <tbody>
                     <?php 
-                    
+                    //Affichage des enseignants sous forme de tableau html
                     $html = "";
                     foreach($teachers as $teacher) {
 

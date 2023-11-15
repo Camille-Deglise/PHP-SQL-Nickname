@@ -62,6 +62,7 @@ $section = $db->getOneSection($teacher["fkSection"]);
                 <input type="hidden" name="idTeacher" id="idTeacher" value="<?= $teacher["idTeacher"] ?>">
                 <p>
                     <?php
+                    //Condition pour l'affichage du genre selon les données inscrites dans la db
                     $check1 = "";
                     $check2 = "";
                     $check3 = "";
@@ -108,6 +109,7 @@ $section = $db->getOneSection($teacher["fkSection"]);
                     <select name="section" id="section">
                         <option value="">Section</option>
                         <?php
+                        //Condition pour l'affichage de la section avec le mot clé selected s'il y a correspondance
                         $html = "";
                         foreach($sections as $section) {
                             if($teacher["fkSection"] === $section["idSection"])
