@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Auteur : Camille Déglise
+ * Date : 31.10.2023
+ * Description : Fichier HTML-PHP pour afficher les détails d'un enseignant
+ * Utilisation de la méthode public getOneTeacher(id)
+ * Utilisation de la méthode public getOneSection($tableau[entrée pour la section])
+ * Nécessite la récupération de l'ID de l'enseignant depuis $_GET
+ */
 $idTeacher = $_GET["idTeacher"];
 
 include("Database.php");
@@ -50,7 +57,21 @@ $section = $db->getOneSection($teacher["fkSection"]);
     <div class="container">
         <div class="user-head">
             <h3>Détail : <?= $teacher["teaFirstname"] . " " . $teacher["teaName"]?> 
-                <img style="margin-left: 1vw;" height="20em" src="./img/male.png" alt="male symbole">
+            <?php
+                if($teacher["teaGender"] == "M")
+                {
+                    echo "<img style=\"margin-left: 1vw;\" height=\"20em\" src=\"./img/male.png\" alt=\"male symbole\">";
+                }
+                elseif($teacher["teaGender"] == "F")
+                {
+                    echo "<img style=\"margin-left: 1vw;\" height=\"20em\" src=\"./img/femelle.png\" alt=\"femme symbole\">";
+                }
+                else
+                {
+                    echo "<img style=\"margin-left: 1vw;\" height=\"20em\" src=\"./img/autre.png\" alt=\"autre symbole\">";
+                }
+            ?>
+                
             </h3>
             <p>
                 <?= $section["secName"]?> <!-- Doit aller chercher INFO dans t_section-->

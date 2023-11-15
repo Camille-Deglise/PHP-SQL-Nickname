@@ -1,4 +1,10 @@
 <?php
+/**
+ * Auteur : Camille Déglise
+ * Date : 31.10.2023
+ * Description : Fichier HTML-PHP pour l'ajout d'un enseignant dans la db
+ * Utilisation de la méthode public getAllSections()
+ */
 include("Database.php");
 $db = new Database();
 $sections = $db->getAllSections();

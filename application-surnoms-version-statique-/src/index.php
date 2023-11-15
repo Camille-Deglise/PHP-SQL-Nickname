@@ -1,4 +1,12 @@
 <?php 
+/**
+ * Auteur : Camille Déglise
+ * Date : 31.10.2023
+ * Description : Fichier HTML-PHP pour la page d'accueil du site
+ * Utilisation de la méthode public getAllTeachers() pour afficher les enseignants
+ * Possibilité de modifier, supprimer ou consulter les données d'un enseigant
+ * Possibilité de se loguer PAS FONCTIONNEL (15.11.2023)
+ */
 include("Database.php");
 $db = new Database();
 $teachers = $db->getAllTeachers();
@@ -7,7 +15,6 @@ $teachers = $db->getAllTeachers();
 //echo "<pre>";
 //var_dump($teachers);
 //echo "</pre>";
-
 
 ?>
 

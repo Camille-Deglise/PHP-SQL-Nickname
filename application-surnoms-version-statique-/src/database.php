@@ -10,7 +10,6 @@
 
  class Database {
 
-
     // Variable de classe
     private $connector;
 
@@ -50,6 +49,7 @@
             $req->bindValue($bind[0], $bind[1], $bind[2]);
         }
         $req->execute();
+        return $req;
     }
 
     /**
@@ -103,11 +103,13 @@
     public function getOneTeacher($id){
         // Récupère les données sur la table enseignants avec une requête sql
         // en utilisant son ID
-        $query = "SELECT * FROM t_teacher WHERE idTeacher = $id;"; // faire un join pour récupérer le nom de la section au lieu de l'ID
-        
-        //MODIFIER EN PREPARE
+        $query = "SELECT * FROM t_teacher WHERE idTeacher = :id"; 
+        $binds = [
+            ['id', $id, PDO::PARAM_INT]
+        ];
+
         //appeler la méthode pour executer la requête
-        $req = $this->querySimpleExecute($query);
+        $req = $this->queryPrepareExecute($query,$binds);
 
         //Retourne dans un tableau associatif à une seule 
         //entrée les données d'un enseignant
@@ -128,13 +130,15 @@
      public function getOneSection($idSec)
      {
         //Récupère les données sur la table section avec une requête sql
-        $query = "SELECT * FROM t_section WHERE idSection = $idSec";
-
+        $query = "SELECT * FROM t_section WHERE idSection = :id";
+        $binds = [
+            ['id', $idSec, PDO::PARAM_INT]
+        ];
         //MODIFIER EN PREPARE
         //appeler la méthode pour exécuter la requête
-        $req = $this->querySimpleExecute($query);
+        $req = $this->queryPrepareExecute($query, $binds);
 
-        //Reourne dans un tableau associatif les données de section
+        //Retourne dans un tableau associatif les données de section
         $section = $this->formatData($req);
 
         return $section[0];
@@ -143,7 +147,6 @@
     /**
      * Méthode pour insérer les données d'un nouvel enseignsant 
      * Prend en argument les données du $_POST de la page qui l'appelle
-     * Utilise la méthode prepare car 
      */
     public function addTeacher($data)
     {
@@ -162,19 +165,7 @@
         teaNickname, teaOrigine, fkSection)
         VALUES(:firstName, :lastname, :gender, :nickName, :origin, :section)";
 
-        /*
-        //Utilisation de la méthode Prepare pour envoyer les données dans la db. 
-        $req = $this->connector->prepare($query);
-        $req->bindValue('firstName', $firstName, PDO::PARAM_STR);
-        $req->bindValue('lastname', $lastname, PDO::PARAM_STR);
-        $req->bindValue('gender', $gender,PDO::PARAM_STR);
-        $req->bindValue('nickName', $nickName, PDO::PARAM_STR);
-        $req->bindValue('origin', $origin, PDO::PARAM_STR);
-        $req->bindValue('section', $fkSection, PDO::PARAM_INT);
-
-        //méthode d'exécution de la requête
-        $req->execute();
-        */
+        //Liasion des variables avec le marqueur 
         $binds = [
             ['firstName', $firstName, PDO::PARAM_STR],
             ['lastname', $lastname, PDO::PARAM_STR],
@@ -186,8 +177,16 @@
         $this->queryPrepareExecute($query, $binds);
 
     }
+    /**
+     * Méthode pour modifier les données d'un enseignant déjà existant
+     * Prend en arguement les données du $_POST de la page qui l'appelle
+     * Fonctionne avec un prepare-query
+     */
+
     public function updateTeacher($data)
     {
+         //Ajout des données de $_POST ($data) dans de nouvelles variables
+        //pour des questions de lisibilité. 
         $firstName = $data["firstName"];
         $lastname = $data["name"];
         $gender = $data["genre"];
@@ -195,6 +194,8 @@
         $origin = $data["origin"];
         $fkSection = $data["section"];
 
+         //Requête sur la db pour modifier les nouvelles données avec prepare
+        //:xxx == étiquette 
         $query = "UPDATE t_teacher
                   SET teaFirstName = :firstName, 
                       teaName = :lastname, 
@@ -203,9 +204,8 @@
                       teaOrigine = :origin, 
                       fkSection = :section
                   WHERE idTeacher = ". $data['idTeacher'] . ";";
-
-        var_dump($query);
-
+        
+        //Liasion des variables avec le marqueur 
         $binds = [
             ['firstName', $firstName, PDO::PARAM_STR],
             ['lastname', $lastname, PDO::PARAM_STR],
@@ -216,7 +216,10 @@
         ];
         $this->queryPrepareExecute($query, $binds);
     }
-
+    /**
+     * Fonction pour supprimer dans la base de donnée un enseignant 
+     * Prend en paramètre l'ID de l'enseignant sélectionné 
+     */
     public function deleteTeacher($id)
     {
         $query = "DELETE FROM t_teacher WHERE idTeacher = :id";

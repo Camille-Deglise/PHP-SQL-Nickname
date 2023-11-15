@@ -1,4 +1,10 @@
 <?php
+/**
+ * Auteur : Camille Déglise
+ * Date : 31.10.2023
+ * Description : Fichier PHP qui va faire la validation de données 
+ * pour la modification d'un enseignant et affiche un tableau d'erreurs. 
+ */
 echo "<pre>";
 var_dump($_POST);
 echo "</pre>";

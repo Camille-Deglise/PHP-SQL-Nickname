@@ -1,4 +1,13 @@
 <?php
+/**
+ * Auteur : Camille Déglise
+ * Date : 31.10.2023
+ * Description : Fichier HTML-PHP pour la modification d'un enseignant dans la db
+ * Utilisation de la méthode public getAllSections()
+ * Utilisation de la méthode public getOneTeacher(id)
+ * Nécessite la récupération de l'ID de l'enseignant depuis le $_GET
+ */
+
 $idTeacher = $_GET["idTeacher"];
 
 include("Database.php");
@@ -6,7 +15,7 @@ $db = new Database();
 $sections = $db->getAllSections();
 $teacher = $db->getOneTeacher($idTeacher);
 
-var_dump($teacher);
+//var_dump($teacher);
 
 $section = $db->getOneSection($teacher["fkSection"]);
 ?>
@@ -115,7 +124,7 @@ $section = $db->getOneSection($teacher["fkSection"]);
                 </p>
                 <p>
                     <input type="submit" value="Modifier">
-                    <button type="button" id="resetBtn" value="Reset">Effacer</button>
+                    <button type="button" onclick="document.getElementById('form1').reset();">Effacer</button>
                 </p>
             </form>
         </div>
@@ -123,12 +132,11 @@ $section = $db->getOneSection($teacher["fkSection"]);
             <a href="index.php">Retour à la page d'accueil</a>
         </div>
     </div>
-
     <footer>
         <p>Copyright GCR - bulle web-db - 2022</p>
     </footer>
 
-    <script src="js/script.js"></script>
+   <!-- <script src="js/script.js"></script>-->
 
 </body>
 
