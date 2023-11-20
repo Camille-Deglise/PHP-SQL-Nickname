@@ -7,6 +7,8 @@
  * Possibilité de modifier, supprimer ou consulter les données d'un enseigant
  * Possibilité de se loguer PAS FONCTIONNEL (15.11.2023)
  */
+session_start();
+//session_destroy();
 include("Database.php");
 $db = new Database();
 $teachers = $db->getAllTeachers();
@@ -37,7 +39,7 @@ $teachers = $db->getAllTeachers();
                 <h1>Surnom des enseignants</h1>
             </div>
             <div class="login-container">
-                <form action="#" method="post">
+                <form action="verifyLogin.php" method="post">
                     <label for="user"> </label>
                     <input type="text" name="user" id="user" placeholder="Login">
                     <label for="password"> </label>

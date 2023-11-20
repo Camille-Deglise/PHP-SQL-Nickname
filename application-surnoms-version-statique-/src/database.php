@@ -230,10 +230,65 @@
         
     }
      /*******************************************************************************************************************************************/
-     private function addUser()
-     {
-        $query = "INSERT INTO t_user VALUES (";
-     }
+    /* RAPPEL THEORIE 133
+    * Pour hasher un mot de passe avant de rentrer dans la db 
+    * password_hash("mot_de_passe_à_haser", algorithm à utiliser);
+    * password_hash("toto", PASSWORD_BCRYPT);
+    * Faire danns le bash php -a puis un echo de cette variable et enregistrer ceci dans la base de données
+    * INSERT INTO t_users ("login", "kfjhadskfjhasdkfj(mdp_hash)", 0 ou 1 pr admin)
+    * Lors de la vérification utiliser password_verify($password, $hash qui contiendra le mdp hashé)
+    * retourne un bool
+    */
+
+    /**
+     * Méthode de vérification du login utilisateur 
+     */
+    public function verifyLoginAndPassword($datas)
+    {   
+        $userLogin = $datas["user"];
+        $passwordProvided = $datas["password"];
+
+        //Vérifier si l'utilisateur est bien dans la base de données 
+       
+        $query = "SELECT * FROM t_users WHERE useLogin = :useLogin";
+        $binds = [
+            ['useLogin', $userLogin, PDO::PARAM_STR],
+           
+        ];
+
+       $verifyUser = $this->queryPrepareExecute($query, $binds);
+
+       //l'utilisateur existe
+       if($verifyUser = true)
+       {
+        //comparaison du mot de passe entre le mot de passe
+        if(password_verify($passwordProvided, $verifyUser["usePassword"]))
+        {
+            //si le mot de passe est bon, voir si l'utilisateur est un admin
+            $admin = $verifyUser["useAdministrator"];
+            if($admin === '1')
+            {
+                echo "Connexion OK en tant qu'administrateur";
+                echo '<a href="index.php">Accueil</a>';
+            }
+            
+            else
+            {
+                echo "Connexion OK en tant qu'utilisateur";
+                echo '<a href="index.php">Accueil</a>';
+            }
+
+        }//Si le mot de passe n'est pas le bon.
+        else
+        {
+            echo "Connexion KO, votre mot de passe est erroné";
+        }
+       }//Si ni l'utilisateur ni le mot de passe sont bons
+       else {
+        echo "L'utilisateur n'existe pas";
+       }
+
+    }
 
  }
 ?>
