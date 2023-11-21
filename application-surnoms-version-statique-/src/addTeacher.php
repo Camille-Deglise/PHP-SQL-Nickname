@@ -5,9 +5,11 @@
  * Description : Fichier HTML-PHP pour l'ajout d'un enseignant dans la db
  * Utilisation de la méthode public getAllSections()
  */
+
 include("Database.php");
 $db = new Database();
 
+//récupération de toutes les sections avec la méthode getAllSections dans le tableau $sections
 $sections = $db->getAllSections();
 
 ?>

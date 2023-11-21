@@ -229,6 +229,25 @@
         $this->queryPrepareExecute($query, $binds);
         
     }
+    /**
+     * Fonction qui va incrémenter de 1 la valeur des voix d'un enseignant dans la base de donnée
+     */
+    public function upgradeVote($id)
+    {
+        $query = "UPDATE t_teacher 
+                  SET teaVoice = teaVoice +1
+                  WHERE idTeacher = :id";
+        $binds = [
+            ['id', $id, PDO::PARAM_INT]
+        ];
+        $this->queryPrepareExecute($query, $binds);
+    }
+
+
+
+
+
+
      /*******************************************************************************************************************************************/
     /* RAPPEL THEORIE 133
     * Pour hasher un mot de passe avant de rentrer dans la db 
@@ -240,9 +259,9 @@
     * retourne un bool
     */
 
-    /**
+    /*
      * Méthode de vérification du login utilisateur 
-     */
+     
     public function verifyLoginAndPassword($datas)
     {   
         $userLogin = $datas["user"];
@@ -256,10 +275,11 @@
            
         ];
 
-       $verifyUser = $this->queryPrepareExecute($query, $binds);
+       $result = $this->queryPrepareExecute($query, $binds);
+       echo $result;
 
        //l'utilisateur existe
-       if($verifyUser = true)
+       //if($verifyUser)
        {
         //comparaison du mot de passe entre le mot de passe
         if(password_verify($passwordProvided, $verifyUser["usePassword"]))
@@ -284,11 +304,12 @@
             echo "Connexion KO, votre mot de passe est erroné";
         }
        }//Si ni l'utilisateur ni le mot de passe sont bons
-       else {
+       //else {
         echo "L'utilisateur n'existe pas";
        }
+       
 
-    }
+    }*/
 
  }
 ?>

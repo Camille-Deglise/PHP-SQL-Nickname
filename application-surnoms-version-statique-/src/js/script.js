@@ -4,14 +4,14 @@
     //}
 //}
 
-function Reset() {
-  document.getElementById("form1").reset();
-}
+//function Reset() {
+  //document.getElementById("form1").reset();
+//}
 
 // Please do not use inline event handlers, use this instead:
-document.getElementById("resetBtn").onclick = function () {
-  Reset();
-}
+//document.getElementById("resetBtn").onclick = function () {
+//  Reset();
+//}
 
 // Alternatively: 
-document.getElementById("resetBtn").onclick = Reset;
+//document.getElementById("resetBtn").onclick = Reset;

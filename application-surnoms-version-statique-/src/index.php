@@ -5,11 +5,13 @@
  * Description : Fichier HTML-PHP pour la page d'accueil du site
  * Utilisation de la méthode public getAllTeachers() pour afficher les enseignants
  * Possibilité de modifier, supprimer ou consulter les données d'un enseigant
- * Possibilité de se loguer PAS FONCTIONNEL (15.11.2023)
+ * Possibilité de se loguer PAS FONCTIONNEL (20.11.2023)
  */
-session_start();
+//session_start();
 //session_destroy();
 include("Database.php");
+
+//Connexion à la base de donnée via le constructeur de la classe 
 $db = new Database();
 $teachers = $db->getAllTeachers();
 
@@ -57,6 +59,7 @@ $teachers = $db->getAllTeachers();
 
     <div class="container">
         <h3>Liste des enseignants</h3>
+        <button type="submit" id="plusieurs">Elire plusieurs</button>
         <form action="#" method="post">
             <table>
                 <thead>
@@ -73,6 +76,7 @@ $teachers = $db->getAllTeachers();
                     foreach($teachers as $teacher) {
 
                         $html .= "<tr>";
+                        $html .= "<td> <input type=\"checkbox\" id=\"elu\"/>";
                         $html .= "<td>" . $teacher["teaFirstname"] . " " . $teacher["teaName"] . "</td>";
                         $html .= "<td>" . $teacher["teaNickname"] . "</td>";
                         $html .= "<td class=\"containerOptions\">";
@@ -86,6 +90,17 @@ $teachers = $db->getAllTeachers();
                         $html .= "<a href=\"./detailTeacher.php?idTeacher=" .  $teacher["idTeacher"] . "\">";
                         $html .= "<img height=\"20em\" src=\"./img/detail.png\" alt=\"detail\">";
                         $html .= "</a>";
+                        $html .= "<a href= \"election.php?idTeacher=" . $teacher["idTeacher"] . "\">J'élis</a>";
+                        //affichage des voix si + grd que 0 
+                        if($teacher["teaVoice"]> 0)
+                        {
+                            $html .= " " . $teacher["teaVoice"];
+                        }
+                        else
+                        {
+                            $html .= " Aller ! Voter pour moi ";
+                        }
+                        
                         $html .= "</td>";
                         $html .= "</tr>";
                     }

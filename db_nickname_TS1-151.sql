@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db:3306
--- Généré le : lun. 20 nov. 2023 à 21:01
+-- Généré le : mar. 21 nov. 2023 à 09:24
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.0.27
 
@@ -38,7 +38,9 @@ CREATE TABLE `t_section` (
 
 INSERT INTO `t_section` (`idSection`, `secName`) VALUES
 (1, 'Informatique'),
-(2, 'Bois');
+(2, 'Bois'),
+(3, 'Mécanique'),
+(4, 'Automobile');
 
 -- --------------------------------------------------------
 
@@ -53,18 +55,21 @@ CREATE TABLE `t_teacher` (
   `teaGender` char(1) NOT NULL,
   `teaNickname` varchar(50) NOT NULL,
   `teaOrigine` text NOT NULL,
-  `fkSection` int NOT NULL
+  `fkSection` int NOT NULL,
+  `teaVoice` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `t_teacher`
 --
 
-INSERT INTO `t_teacher` (`idTeacher`, `teaFirstname`, `teaName`, `teaGender`, `teaNickname`, `teaOrigine`, `fkSection`) VALUES
-(1, 'Gregory', 'Charmier', 'M', 'GregLeBarbare', 'C\'est son nom de guerrier échiquéen sur les différentes plateformes de jeu.', 1),
-(2, 'Antoine', 'Mveng', '1', 'AMG', 'C\'est son nom de famille et son prénom contracté', 1),
-(3, 'Alain', 'Girardet', '1', 'AGT', 'C\'est son nom de famille et son prénom contracté', 1),
-(4, 'Bertrand', 'Sahli', '1', 'BSI', 'C\'est la contraction de son nom de famille et de son surnom', 1);
+INSERT INTO `t_teacher` (`idTeacher`, `teaFirstname`, `teaName`, `teaGender`, `teaNickname`, `teaOrigine`, `fkSection`, `teaVoice`) VALUES
+(2, 'Antoine', 'Mveng', 'M', 'AMG', 'contraction', 1, 1),
+(3, 'Alain', 'Girardet', 'M', 'AGT', 'contraction', 1, 6),
+(4, 'Grégory', 'Charmier', 'M', 'GregLeBarbare', 'jeux_en_lignes', 1, 32),
+(5, 'Bertrand', 'Sahli', 'M', 'BSI', 'test', 1, 20),
+(17, 'Test', 'Testt', 'A', 'TTT', 'Test', 4, 1),
+(18, 'testvote', 'testVote', 'F', 'tve', 'testpourlesvotes', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -84,8 +89,8 @@ CREATE TABLE `t_user` (
 --
 
 INSERT INTO `t_user` (`idUser`, `useLogin`, `usePassword`, `useAdministrator`) VALUES
-(3, 'administrator', '$2y$10$PxGJcD30ntZVx1QhZMThoecAL.zLIPtZLhMS0QDboXlKliFtXHLu6', 1),
-(4, 'nonAdmin', '$2y$10$xQHsH17SOrEIK9Bs8qmPR.g0NFB3l9VuHTM0HmNtEASN9CQLASFFi', 0);
+(1, 'administrator', '$2y$10$PxGJcD30ntZVx1QhZMThoecAL.zLIPtZLhMS0QDboXlKliFtXHLu6', 1),
+(2, 'nonAdmin', '$2y$10$xQHsH17SOrEIK9Bs8qmPR.g0NFB3l9VuHTM0HmNtEASN9CQLASFFi', 0);
 
 --
 -- Index pour les tables déchargées
@@ -118,19 +123,19 @@ ALTER TABLE `t_user`
 -- AUTO_INCREMENT pour la table `t_section`
 --
 ALTER TABLE `t_section`
-  MODIFY `idSection` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idSection` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `t_teacher`
 --
 ALTER TABLE `t_teacher`
-  MODIFY `idTeacher` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idTeacher` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `t_user`
 --
 ALTER TABLE `t_user`
-  MODIFY `idUser` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idUser` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées

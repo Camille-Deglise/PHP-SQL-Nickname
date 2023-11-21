@@ -7,12 +7,16 @@
  * Utilisation de la méthode public getOneTeacher(id)
  * Nécessite la récupération de l'ID de l'enseignant depuis le $_GET
  */
-
+////Déclaration dans une variable de l'identifiant de l'enseignant récupéré depuis le $_GET
 $idTeacher = $_GET["idTeacher"];
 
 include("Database.php");
 $db = new Database();
+
+//Utilisation dans le tableau $sections, la méthode getAllSections()
 $sections = $db->getAllSections();
+
+//Utilisation de la méthode getOneTeacher, avec id récupéré du $_GET, pour exploiter les données de l'enseignant
 $teacher = $db->getOneTeacher($idTeacher);
 
 //var_dump($teacher);

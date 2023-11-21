@@ -7,16 +7,21 @@
  * Utilisation de la méthode public getOneSection($tableau[entrée pour la section])
  * Nécessite la récupération de l'ID de l'enseignant depuis $_GET
  */
+
+ //Déclaration dans une variable de l'identifiant de l'enseignant récupéré depuis le $_GET
 $idTeacher = $_GET["idTeacher"];
 
 include("Database.php");
+//Connexion à la base de donnée via le constructeur de la classe 
 $db = new Database();
+
+//Récupération des informations de l'enseignant via la variable $idTeacher
 $teacher = $db->getOneTeacher($idTeacher);
 $section = $db->getOneSection($teacher["fkSection"]);
 
-//echo "<pre>";
-//var_dump($teacher);
-//echo "</pre>";
+//utilise la méthode pour augmenter les votes 
+$db->upgradeVote($idTeacher);
+
 
 ?>
 <!DOCTYPE html>
@@ -94,6 +99,20 @@ $section = $db->getOneSection($teacher["fkSection"]);
             </div>
         </div>
         <div class="user-footer">
+            <p><a href="election.php">J'élis</a></p>
+            <p>Nombre de votes reçus :  <?php 
+            //Affichage des voix si plus grand que 0 
+            if($teacher["teaVoice"] == 0)
+            {
+                echo "Aucun vote";
+            }
+            else 
+            {
+               echo $teacher["teaVoice"];
+            }
+            
+            ?>
+            </p>
             <a href="index.php">Retour à la page d'accueil</a>
         </div>
 
